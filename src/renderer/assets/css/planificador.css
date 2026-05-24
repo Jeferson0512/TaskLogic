@@ -1,0 +1,391 @@
+.planner-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+.control-date {
+  border: 1px solid var(--line);
+  background: var(--panel-soft);
+  border-radius: 18px;
+  padding: 9px 12px;
+  min-width: 170px;
+}
+
+.control-date label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.control-date strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--text);
+}
+
+.gantt-wrap {
+  overflow: auto;
+}
+
+.gantt {
+  min-width: 1180px;
+}
+
+.gantt-head,
+.gantt-row {
+  display: grid;
+  grid-template-columns: 390px 1fr;
+}
+
+.gantt-head {
+  background: var(--panel-soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.gantt-title {
+  border-right: 1px solid var(--line);
+  padding: 16px;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+.gantt-days {
+  display: flex;
+}
+
+.gantt-day {
+  width: var(--day-width);
+  min-width: var(--day-width);
+  border-right: 1px solid var(--line-soft);
+  text-align: center;
+  padding: 12px 0;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.gantt-day.is-weekend,
+.grid-cell.is-weekend {
+  background: #f1f5f9;
+  color: #94a3b8;
+}
+
+.gantt-day.is-holiday,
+.grid-cell.is-holiday {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.gantt-row {
+  min-height: 96px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.gantt-row:hover {
+  background: #f8fafc;
+}
+
+.activity-info {
+  border-right: 1px solid var(--line);
+  padding: 16px;
+}
+
+.activity-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.activity-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.activity-order {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+
+.activity-name strong {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activity-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.activity-sub {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 6px;
+  line-height: 1.45;
+}
+
+.activity-actions {
+  display: flex;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+.timeline {
+  position: relative;
+  min-height: 96px;
+}
+
+.grid-days {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.grid-cell {
+  width: var(--day-width);
+  min-width: var(--day-width);
+  border-right: 1px solid var(--line-soft);
+}
+
+.bar-layer {
+  position: relative;
+  height: 100%;
+  padding: 32px 0;
+}
+
+.bar {
+  height: 32px;
+  border-radius: 999px;
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08);
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: #64748b;
+}
+
+.bar-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 12px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.options-grid {
+  border: 1px solid var(--line);
+  background: var(--panel-soft);
+  border-radius: 22px;
+  padding: 13px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.toggle-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.toggle-card strong {
+  display: block;
+  font-size: 14px;
+}
+
+.toggle-card small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.switch {
+  width: 46px;
+  height: 26px;
+  border: 0;
+  border-radius: 999px;
+  background: #cbd5e1;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.switch span {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #fff;
+  transition: .18s ease;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, .18);
+}
+
+.switch.is-on {
+  background: var(--dark);
+}
+
+.switch.is-on span {
+  left: 24px;
+}
+
+.preview {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 14px;
+}
+
+.preview__title {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+.preview__grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.preview__item {
+  background: var(--panel-soft);
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.preview__item span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.preview__item strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+@media (max-width: 1200px) {
+  .planner-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+
+  .options-grid,
+  .preview__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.export-dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+.export-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  min-width: 210px;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 18px;
+  padding: 8px;
+  box-shadow: var(--shadow);
+}
+
+.export-dropdown__menu.is-open {
+  display: flex;
+}
+
+.export-dropdown__menu button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  border-radius: 13px;
+  color: var(--text);
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+  text-align: left;
+}
+
+.export-dropdown__menu button:hover {
+  background: var(--panel-soft);
+}
+
+.side-stack--planner {
+  height: 100%;
+  align-self: stretch;
+}
+
+.side-card--summary {
+  flex: 0 0 auto;
+}
+
+.side-card--holidays {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-card--holidays .holiday-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 4px;
+}
