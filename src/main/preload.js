@@ -27,5 +27,10 @@ contextBridge.exposeInMainWorld("api", {
         listar: () => ipcRenderer.invoke("feriados:listar"),
         guardar: (data) => ipcRenderer.invoke("feriados:guardar", data),
         eliminar: (id) => ipcRenderer.invoke("feriados:eliminar", id),
+        importarDeApi: (año) => ipcRenderer.invoke("feriados:importarDeApi", año),
+    },
+
+    db: {
+        exportar: (password, format) => ipcRenderer.invoke("db:exportar", password, format),
     },
 });

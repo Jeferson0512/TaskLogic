@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS actividades (
   modo TEXT NOT NULL DEFAULT 'DURACION',
   cuenta_inicio INTEGER NOT NULL DEFAULT 1,
   considerar_feriados INTEGER NOT NULL DEFAULT 1,
+  ajustar_siguientes INTEGER NOT NULL DEFAULT 1,
   responsable TEXT,
   estado TEXT NOT NULL DEFAULT 'PENDIENTE',
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
@@ -47,3 +48,11 @@ CREATE TABLE IF NOT EXISTS feriados (
 
 INSERT OR IGNORE INTO secuencias (entidad, ultimo_numero)
 VALUES ('PROYECTO', 0);
+
+CREATE TABLE IF NOT EXISTS configuracion (
+  clave TEXT PRIMARY KEY,
+  valor TEXT NOT NULL
+);
+
+INSERT OR IGNORE INTO configuracion (clave, valor)
+VALUES ('admin_password', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');

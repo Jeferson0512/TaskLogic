@@ -1,12 +1,15 @@
 {
   "name": "tasklogic",
   "productName": "tasklogic",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "My Electron application description",
   "main": "src/main/main.js",
   "private": true,
   "scripts": {
     "start": "electron-forge start",
+    "build": "node scripts/build.js",
+    "installer": "node scripts/make-installer.js",
+    "dist": "node scripts/build.js && node scripts/make-installer.js",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -32,6 +35,7 @@
     "css-loader": "^6.11.0",
     "electron": "^41.0.0",
     "node-loader": "^2.1.0",
+    "playwright-core": "^1.60.0",
     "style-loader": "^3.3.4"
   },
   "dependencies": {

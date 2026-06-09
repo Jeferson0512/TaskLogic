@@ -1,5 +1,5 @@
 const path = require("path");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, session } = require("electron");
 
 const { initDatabase } = require("./database");
 const { registerIpcHandlers } = require("./ipc");
@@ -17,9 +17,31 @@ function createWindow() {
         },
     });
 
-    mainWindow.loadFile(path.join(__dirname, "../renderer/index.html"));
+    // Limpia caché al arrancar para que CSS/JS siempre estén frescos
+    session.defaultSession.clearCache().then(() => {
+        mainWindow.loadFile(path.join(__dirname, "../renderer/index.html"));
+    });
 
-    mainWindow.webContents.openDevTools();
+    // Intercepta teclas directamente en el webContents (más fiable que globalShortcut)
+    mainWindow.webContents.on("before-input-event", (event, input) => {
+        // F12 → abre/cierra DevTools
+        if (input.type === "keyDown" && input.key === "F12") {
+            if (mainWindow.webContents.isDevToolsOpened()) {
+                mainWindow.webContents.closeDevTools();
+            } else {
+                mainWindow.webContents.openDevTools();
+            }
+            event.preventDefault();
+        }
+
+        // Ctrl+Shift+R → vacía caché y recarga
+        if (input.type === "keyDown" && input.key === "R" && input.control && input.shift) {
+            session.defaultSession.clearCache().then(() => {
+                mainWindow.webContents.reload();
+            });
+            event.preventDefault();
+        }
+    });
 }
 
 app.whenReady().then(() => {

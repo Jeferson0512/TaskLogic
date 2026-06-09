@@ -4,7 +4,8 @@
  * Contiene utilidades compartidas por dashboard y planificador.
  */
 window.App = (() => {
-  const DEFAULT_CONTROL_DATE = "2026-05-22";
+  const _today = new Date();
+  const DEFAULT_CONTROL_DATE = `${_today.getFullYear()}-${String(_today.getMonth() + 1).padStart(2, "0")}-${String(_today.getDate()).padStart(2, "0")}`;
   const STORAGE_KEY = "planificacion_gantt_projects_v1";
 
   const icons = {
@@ -15,6 +16,7 @@ window.App = (() => {
     calendarOff: "calendar-off",
     check: "check-circle-2",
     clock: "clock-3",
+    copy: "copy",
     download: "download",
     edit: "pencil",
     eye: "eye",
@@ -122,14 +124,16 @@ window.App = (() => {
     return clone(fallback);
   }
 
-  function showToast(title, message = "") {
+  function showToast(title, message = "", type = "success") {
     const root = document.getElementById("toastRoot");
     if (!root) return;
 
+    const iconMap = { success: "check", warning: "alert", error: "alert" };
+
     const node = document.createElement("div");
-    node.className = "toast";
+    node.className = `toast toast--${type}`;
     node.innerHTML = `
-      <div class="toast__icon">${icon("check", 20)}</div>
+      <div class="toast__icon">${icon(iconMap[type] || "check", 20)}</div>
       <div>
         <div class="toast__title">${escapeHtml(title)}</div>
         ${message ? `<div class="toast__message">${escapeHtml(message)}</div>` : ""}
@@ -141,7 +145,46 @@ window.App = (() => {
 
     window.setTimeout(() => {
       node.remove();
-    }, 3200);
+    }, 3800);
+  }
+
+  function showConfirm(title, message = "", confirmLabel = "Eliminar") {
+    return new Promise((resolve) => {
+      const existing = document.getElementById("confirmDialog");
+      if (existing) existing.remove();
+
+      const node = document.createElement("div");
+      node.id = "confirmDialog";
+      node.className = "confirm-overlay";
+      node.innerHTML = `
+        <div class="confirm-box">
+          <div class="confirm-box__icon">${icon("alert", 22)}</div>
+          <div class="confirm-box__body">
+            <div class="confirm-box__title">${escapeHtml(title)}</div>
+            ${message ? `<div class="confirm-box__message">${escapeHtml(message)}</div>` : ""}
+          </div>
+          <div class="confirm-box__actions">
+            <button class="btn" id="confirmDialogCancel">Cancelar</button>
+            <button class="btn btn--danger" id="confirmDialogOk">${escapeHtml(confirmLabel)}</button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(node);
+      renderIcons();
+
+      document.getElementById("confirmDialogOk").addEventListener("click", () => {
+        node.remove();
+        resolve(true);
+      });
+      document.getElementById("confirmDialogCancel").addEventListener("click", () => {
+        node.remove();
+        resolve(false);
+      });
+      node.addEventListener("click", (e) => {
+        if (e.target === node) { node.remove(); resolve(false); }
+      });
+    });
   }
 
   function downloadBlob(blob, filename) {
@@ -197,6 +240,7 @@ window.App = (() => {
     saveState,
     resetState,
     showToast,
+    showConfirm,
     downloadBlob,
     statusPill,
     metricCard,

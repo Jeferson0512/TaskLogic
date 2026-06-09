@@ -48,12 +48,56 @@ window.Api = (() => {
                 const project = memory.projects.find((p) => String(p.id) === String(proyectoId));
                 return project?.actividades || [];
             },
+
+            guardar: async (data) => {
+                if (hasElectronApi) return window.api.actividades.guardar(data);
+                const project = memory.projects.find((p) => String(p.id) === String(data.proyectoId));
+                if (project) {
+                    if (!project.actividades) project.actividades = [];
+                    project.actividades.push(data);
+                }
+                return data;
+            },
+
+            actualizar: async (id, data) => {
+                if (hasElectronApi) return window.api.actividades.actualizar(id, data);
+                return data;
+            },
+
+            eliminar: async (id) => {
+                if (hasElectronApi) return window.api.actividades.eliminar(id);
+                return true;
+            },
         },
 
         feriados: {
             listar: async () => {
                 if (hasElectronApi) return window.api.feriados.listar();
                 return memory.holidays;
+            },
+
+            guardar: async (data) => {
+                if (hasElectronApi) return window.api.feriados.guardar(data);
+                memory.holidays.push(data);
+                return data;
+            },
+
+            eliminar: async (id) => {
+                if (hasElectronApi) return window.api.feriados.eliminar(id);
+                memory.holidays = memory.holidays.filter((h) => String(h.id) !== String(id));
+                return true;
+            },
+
+            importarDeApi: async (año) => {
+                if (hasElectronApi) return window.api.feriados.importarDeApi(año);
+                return { success: false };
+            },
+        },
+
+        db: {
+            exportar: async (password, format) => {
+                if (hasElectronApi) return window.api.db.exportar(password, format);
+                return { success: false };
             },
         },
     };

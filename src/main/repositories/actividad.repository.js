@@ -15,6 +15,7 @@ function mapRow(row) {
         modo: row.modo,
         cuentaInicio: Boolean(row.cuenta_inicio),
         considerarFeriados: Boolean(row.considerar_feriados),
+        ajustarSiguientes: Boolean(row.ajustar_siguientes),
         responsable: row.responsable,
         estado: row.estado,
     };
@@ -46,10 +47,11 @@ function create(data) {
         modo,
         cuenta_inicio,
         considerar_feriados,
+        ajustar_siguientes,
         responsable,
         estado
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `)
         .run(
             data.proyectoId,
@@ -62,13 +64,16 @@ function create(data) {
             data.modo,
             data.cuentaInicio ? 1 : 0,
             data.considerarFeriados ? 1 : 0,
+            data.ajustarSiguientes !== false ? 1 : 0,
             data.responsable,
             data.estado
         );
 
-    return getDb()
-        .prepare("SELECT * FROM actividades WHERE id = ?")
-        .get(result.lastInsertRowid);
+    return mapRow(
+        getDb()
+            .prepare("SELECT * FROM actividades WHERE id = ?")
+            .get(result.lastInsertRowid)
+    );
 }
 
 function update(id, data) {
@@ -85,6 +90,7 @@ function update(id, data) {
         modo = ?,
         cuenta_inicio = ?,
         considerar_feriados = ?,
+        ajustar_siguientes = ?,
         responsable = ?,
         estado = ?,
         updated_at = CURRENT_TIMESTAMP
@@ -100,6 +106,7 @@ function update(id, data) {
             data.modo,
             data.cuentaInicio ? 1 : 0,
             data.considerarFeriados ? 1 : 0,
+            data.ajustarSiguientes !== false ? 1 : 0,
             data.responsable,
             data.estado,
             id

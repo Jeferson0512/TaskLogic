@@ -28,8 +28,24 @@
   color: var(--text);
 }
 
+.control-date input[type="date"] {
+  display: block;
+  margin-top: 4px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  width: 100%;
+  outline: none;
+}
+
 .gantt-wrap {
   overflow: auto;
+  padding-bottom: 16px;
 }
 
 .gantt {
@@ -59,6 +75,33 @@
 
 .gantt-days {
   display: flex;
+  flex-direction: column;
+}
+
+.gantt-months {
+  display: flex;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.gantt-month {
+  flex: 0 0 auto;
+  padding: 4px 6px;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--muted);
+  border-right: 1px solid var(--line);
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gantt-days-inner {
+  display: flex;
 }
 
 .gantt-day {
@@ -66,10 +109,27 @@
   min-width: var(--day-width);
   border-right: 1px solid var(--line-soft);
   text-align: center;
-  padding: 12px 0;
+  padding: 5px 0 6px;
   font-size: 11px;
   color: var(--muted);
   font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.gantt-day__letter {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.65;
+}
+
+.gantt-day__num {
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
 }
 
 .gantt-day.is-weekend,
@@ -103,6 +163,11 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 14px;
+}
+
+.activity-top > div:first-child {
+  min-width: 0;
+  overflow: hidden;
 }
 
 .activity-name {
